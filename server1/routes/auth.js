@@ -18,11 +18,12 @@ router.post('/admin/signup', async (req, res) => {
     }
     const username = parseInput.data.username;
     const password = parseInput.data.password;
+    const isAdmin =true
     const admin = await Admin.findOne({ username });
     if (admin) {
         return res.status(403).json({ message: 'user already exists' });
     }
-    const newAdmin = new Admin({ username, password,isAdmin:true});
+    const newAdmin = new Admin({ username, password,isAdmin:isAdmin});
     await newAdmin.save();
     const token = jwt.sign({ username: newAdmin.username ,id: newAdmin._id,isAdmin:isAdmin}, SECRETKEY, { expiresIn: '1h' });
     res.json({ message: 'user registered successfully', token });

@@ -1,10 +1,15 @@
 import { Button, Card, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { roleState } from "../store/atom/role";
+import { useRecoilValue } from "recoil";
 const Signin = () => {
   const [username,setUsername] = useState('')
   const [password,setPassword] = useState('')
-  const handleSignin = async ()=>{
+  const role = useRecoilValue(roleState)
+  const handleSignup = async ()=>{
+    console.log(role)
+    if(role==='Recruter'){
     await fetch('http://localhost:3001/auth/admin/signup',{
       method:'POST',
       body: JSON.stringify({
@@ -23,6 +28,30 @@ const Signin = () => {
       })
     })
   }
+ 
+if(role === "Candidate"){
+  await fetch('http://localhost:3001/auth/user/signup',{
+    method:'POST',
+    body: JSON.stringify({
+      username: username,
+      password: password,
+    }),
+    headers:{ "Content-type": "application/json" }
+  }).then((response)=>{
+    response.json().then((data)=>{
+      if (data.token){
+        localStorage.setItem('token',data.token)
+      }
+      else{
+        alert(data.message)
+      }
+    })
+  })
+}
+else{
+  alert('not specified what you want')
+}
+}
   return (
     <>
       <div
@@ -94,14 +123,14 @@ const Signin = () => {
               fontSize: "1em",
               fontWeight: "bold",
             }}
-            onClick={handleSignin}
+            onClick={handleSignup}
           >
             Signup
           </Button>
           <br />
           <br />
           Already Register?{" "}
-          <Link to="/signin" style={{ color: "ActiveBorder" }}>
+          <Link to="/signin" style={{ color: "CaptionText" }}>
             Login
           </Link>
         </Card>

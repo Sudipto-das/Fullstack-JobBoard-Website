@@ -17,6 +17,8 @@ const jobSchema = new mongoose.Schema({
   title: String,
   description: String,
   catagory: String,
+  company: String,
+  salary: String,
   lastdate: String,
   admin: {
     type: mongoose.Schema.Types.ObjectId,
@@ -25,19 +27,24 @@ const jobSchema = new mongoose.Schema({
 });
 
 const applicationSchema = new mongoose.Schema({
-  job: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Job",
-  }],
+  job: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Job",
+    },
+  ],
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  admin:{
+  admin: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Admin",
   },
-  resume: String,
+  resume: {
+    data: Buffer, // Store the binary data of the PDF file
+    contentType: String, // Store the MIME type of the PDF (e.g., application/pdf)
+  },
   coverLetter: String,
   status: {
     type: String,

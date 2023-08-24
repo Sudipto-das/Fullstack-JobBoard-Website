@@ -1,11 +1,13 @@
 import { Button, Card, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { roleState } from "../store/atom/role";
 import { useRecoilValue } from "recoil";
+
 const Signin = () => {
   const [username,setUsername] = useState('')
   const [password,setPassword] = useState('')
+  const navigate = useNavigate()
   const role = useRecoilValue(roleState)
   const handleSignup = async ()=>{
     console.log(role)
@@ -21,6 +23,8 @@ const Signin = () => {
       response.json().then((data)=>{
         if (data.token){
           localStorage.setItem('token',data.token)
+          navigate("/joblist")
+
         }
         else{
           alert(data.message)
@@ -41,6 +45,7 @@ if(role === "Candidate"){
     response.json().then((data)=>{
       if (data.token){
         localStorage.setItem('token',data.token)
+        navigate('/joblist')
       }
       else{
         alert(data.message)
@@ -87,7 +92,7 @@ else{
             width: 400,
             height: 300,
             padding: "1em",
-            background: "#7777A4",
+            background: "#D6DBDF",
             color: "whitesmoke",
             fontFamily: "Courier New",
           }}
@@ -97,7 +102,7 @@ else{
             id="outlined-basic"
             label="Username"
             variant="outlined"
-            color="secondary"
+            
             onChange={(e)=>{
               setUsername(e.target.value)
             }}
@@ -108,7 +113,7 @@ else{
             fullWidth={true}
             id="outlined-basic"
             label="Password"
-            color="secondary"
+            
             variant="outlined"
             onChange={(e)=>{
               setPassword(e.target.value)

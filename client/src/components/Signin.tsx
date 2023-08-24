@@ -84,7 +84,7 @@ if(role === "Candidate"){
             width: 400,
             height: 300,
             padding: "1em",
-            background: "#7777A4",
+            background: "#D6DBDF",
             color: "whitesmoke",
             fontFamily: "Courier New",
           }}
@@ -94,7 +94,7 @@ if(role === "Candidate"){
             id="outlined-basic"
             label="Username"
             variant="outlined"
-            color="secondary"
+            
             onChange={(e)=>{
               setUsername(e.target.value)
             }}
@@ -105,7 +105,7 @@ if(role === "Candidate"){
             fullWidth={true}
             id="outlined-basic"
             label="Password"
-            color="secondary"
+            
             variant="outlined"
             onChange={(e)=>{
               setPassword(e.target.value)

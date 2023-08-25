@@ -2,13 +2,15 @@ import { Button, Card, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { roleState } from "../store/atom/role";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { userState } from "../store/atom/user";
 
 const Signin = () => {
   const [username,setUsername] = useState('')
   const [password,setPassword] = useState('')
   const navigate = useNavigate()
   const role = useRecoilValue(roleState)
+  const setUser:any = useSetRecoilState(userState)
   const handleSignup = async ()=>{
     console.log(role)
     if(role==='Recruter'){
@@ -23,6 +25,7 @@ const Signin = () => {
       response.json().then((data)=>{
         if (data.token){
           localStorage.setItem('token',data.token)
+          setUser(username)
           navigate("/joblist")
 
         }
@@ -33,7 +36,7 @@ const Signin = () => {
     })
   }
  
-if(role === "Candidate"){
+    if(role === "Candidate"){
   await fetch('http://localhost:3001/auth/user/signup',{
     method:'POST',
     body: JSON.stringify({
@@ -45,6 +48,7 @@ if(role === "Candidate"){
     response.json().then((data)=>{
       if (data.token){
         localStorage.setItem('token',data.token)
+        setUser(username)
         navigate('/joblist')
       }
       else{
@@ -52,10 +56,7 @@ if(role === "Candidate"){
       }
     })
   })
-}
-else{
-  alert('not specified what you want')
-}
+  }
 }
   return (
     <>
@@ -71,11 +72,11 @@ else{
           style={{
             fontFamily: "Courier New",
             fontSize: "1.2em",
-            color: "Highlight",
+            color: "#43BD78",
             fontWeight: "bold",
           }}
         >
-          Wellcome to JobErina! SignUp bellow
+          Wellcome to CareearConnect! SignUp bellow
         </Typography>
       </div>
       <div
@@ -92,7 +93,7 @@ else{
             width: 400,
             height: 300,
             padding: "1em",
-            background: "#D6DBDF",
+            
             color: "whitesmoke",
             fontFamily: "Courier New",
           }}
@@ -122,11 +123,12 @@ else{
           <br />
           <br />
           <Button
-            variant="contained"
+            variant="outlined"
             style={{
               fontFamily: "Courier New",
               fontSize: "1em",
               fontWeight: "bold",
+              color:'#43BD78'
             }}
             onClick={handleSignup}
           >
@@ -134,8 +136,8 @@ else{
           </Button>
           <br />
           <br />
-          Already Register?{" "}
-          <Link to="/signin" style={{ color: "CaptionText" }}>
+          <span style={{color:"#43BD78"}}>Already Register?</span>{" "}
+          <Link to="/signin" style={{ color: "#43BD78" }}>
             Login
           </Link>
         </Card>

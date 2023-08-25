@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import ListItem from "@mui/material/ListItem";
-import { jobState } from "../store/job";
+import { jobState } from "../store/atom/job";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 

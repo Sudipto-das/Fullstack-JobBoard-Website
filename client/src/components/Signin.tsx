@@ -49,91 +49,91 @@ if(role === "Candidate"){
 }
 
 }
-  return (
-    <>
-      <div
+return (
+  <>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        marginTop: "5em ",
+      }}
+    >
+      <Typography
+        variant="h6"
         style={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "5em ",
+          fontFamily: "Courier New",
+          fontSize: "1.2em",
+          color: "#43BD78",
+          fontWeight: "bold",
         }}
       >
-        <Typography
-          variant="h6"
+        Wellcome to CareearConnect! SignUp bellow
+      </Typography>
+    </div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        marginTop: "2em",
+        color: "white",
+      }}
+    >
+      <Card
+        variant={"outlined"}
+        style={{
+          width: 400,
+          height: 300,
+          padding: "1em",
+          
+          color: "whitesmoke",
+          fontFamily: "Courier New",
+        }}
+      >
+        <TextField
+          fullWidth={true}
+          id="outlined-basic"
+          label="Username"
+          variant="outlined"
+          
+          onChange={(e)=>{
+            setUsername(e.target.value)
+          }}
+        />
+        <br />
+        <br />
+        <TextField
+          fullWidth={true}
+          id="outlined-basic"
+          label="Password"
+          
+          variant="outlined"
+          onChange={(e)=>{
+            setPassword(e.target.value)
+          }}
+        />
+        <br />
+        <br />
+        <Button
+          variant="outlined"
           style={{
             fontFamily: "Courier New",
-            fontSize: "1.2em",
-            color: "Highlight",
+            fontSize: "1em",
             fontWeight: "bold",
+            color:'#43BD78'
           }}
+          onClick={handleSignin}
         >
-          Wellcome to JobErina! Signin bellow
-        </Typography>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "2em",
-          color: "white",
-        }}
-      >
-        <Card
-          variant={"outlined"}
-          style={{
-            width: 400,
-            height: 300,
-            padding: "1em",
-            background: "#D6DBDF",
-            color: "whitesmoke",
-            fontFamily: "Courier New",
-          }}
-        >
-          <TextField
-            fullWidth={true}
-            id="outlined-basic"
-            label="Username"
-            variant="outlined"
-            
-            onChange={(e)=>{
-              setUsername(e.target.value)
-            }}
-          />
-          <br />
-          <br />
-          <TextField
-            fullWidth={true}
-            id="outlined-basic"
-            label="Password"
-            
-            variant="outlined"
-            onChange={(e)=>{
-              setPassword(e.target.value)
-            }}
-          />
-          <br />
-          <br />
-          <Button
-            variant="contained"
-            style={{
-              fontFamily: "Courier New",
-              fontSize: "1em",
-              fontWeight: "bold",
-              background:'Highlight'
-            }}
-            onClick={handleSignin}
-          >
-            Login
-          </Button>
-          <br />
-          <br />
-          New here?{" "}
-          <Link to="/signup" style={{ color: "CaptionText" }}>
-            Signup
-          </Link>
-        </Card>
-      </div>
-    </>
-  );
+          Login
+        </Button>
+        <br />
+        <br />
+        <span style={{color:"#43BD78"}}>New User?</span>{" "}
+        <Link to="/signup" style={{ color: "#43BD78" }}>
+          Signup
+        </Link>
+      </Card>
+    </div>
+  </>
+);
 };
 export default Signin;

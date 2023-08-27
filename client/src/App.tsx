@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { roleState } from "./store/atom/role";
 import { userState } from "./store/atom/user";
+import Applied from "./components/Applied";
 function App() {
   return (
     <Router>
@@ -23,6 +24,7 @@ function App() {
       <Route path="/joblist" element={<JobFeed/>}></Route>
       <Route path="/postjob" element={<PostJob/>}></Route>
       <Route path="/apply/:jobId" element={<Apply/>}></Route>
+      <Route path="/applied" element={<Applied/>}></Route>
       </Routes>
     </Router>
   )
@@ -30,13 +32,12 @@ function App() {
 
 const InitUser =()=>{
   const setUser = useSetRecoilState(userState)
-  const role = useRecoilValue(roleState)
-  
+  const setRole = useSetRecoilState(roleState)
   const Init = async ()=>{
     try{
-      if (role == 'Recruter'){
+      
         
-         fetch(`http://localhost:3001/auth/admin/me`,{
+         fetch(`http://localhost:3001/auth/me`,{
           method:'GET',
           headers:{
             "Content-type": "application/json",
@@ -46,33 +47,14 @@ const InitUser =()=>{
           res.json().then((data)=>{
             if(data){
               setUser(data.username)
-              console.log(data.username)
+              
             } else{
               setUser(null)
             }
             
           })
         })
-      } if(role =='Candidate'){
-        fetch(`http://localhost:3001/auth/user/me`,{
-          method:'GET',
-          headers:{
-            "Content-type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          }
-        }).then((res)=>{
-          res.json().then((data)=>{
-            if(data){
-              setUser(data.username)
-              console.log(data)
-            } else{
-              setUser(null)
-            }
-            
-          })
-        })
-      }
-    } catch(e){
+       } catch(e){
       setUser(null)
     }
   }
@@ -80,7 +62,7 @@ const InitUser =()=>{
     Init()
     
   }, []);
-  return <></>
+  return null
 }
 
 export default App;

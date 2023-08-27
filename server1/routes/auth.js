@@ -38,9 +38,16 @@ router.post('/admin/login', async (req, res) => {
     }
     res.status(403).json({ message: 'user does not exist or incorrect credentials' });
 });
-router.get('/admin/me',authenticatejwt,async (req,res)=>{
-    const admin = await Admin.findOne({username:req.user.username})
-    res.json({'username':admin,})
+router.get('/me',authenticatejwt,async (req,res)=>{
+    const recruter = await Admin.findOne({username:req.user.username})
+    const candidate = await User.findOne({username:req.user.username})
+    if(recruter){
+        res.json({'username':recruter})
+    } else{
+        res.json({'username':candidate})
+    }
+    
+    
 })
 
 // user authentication

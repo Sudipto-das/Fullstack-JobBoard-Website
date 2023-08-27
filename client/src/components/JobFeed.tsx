@@ -53,7 +53,7 @@ const JobFeed = () => {
           >
             <JobsList onSelectJob={(jobId: any) => setSelectedJobId(jobId)} />
           </Grid>
-          <Grid item lg={8} md={12} sm={12}>
+          <Grid item lg={8} md={12} sm={12} >
             <JobDetails selectedJobId={selectedJobId} />
           </Grid>
         </Grid>
@@ -95,8 +95,9 @@ export const JobsList = ({ onSelectJob }) => {
                     color="text.primary"
                     style={{ fontFamily: "initial" }}
                   >
-                    {job.description}
+                    {job.company}
                   </Typography>
+                 
                 }
               />
             </ListItem>
@@ -111,16 +112,18 @@ export const JobsList = ({ onSelectJob }) => {
 export const JobDetails = ({ selectedJobId }) => {
   const navigate = useNavigate()
   const jobs = useRecoilValue(jobState);
-  console.log(jobs);
+  if(!selectedJobId && jobs.length>0){
+    selectedJobId = jobs[0]._id;
+  }
   const selectedJob: any = jobs.find((job: any) => job._id === selectedJobId);
   return (
     <div
       style={{
         position: "fixed",
         padding: "1em",
+       
         
-        width: "100vw",
-        height:'100vh'
+        
       }}
     >
       {selectedJob && (
@@ -128,8 +131,14 @@ export const JobDetails = ({ selectedJobId }) => {
           <Typography variant="h3" style={{ fontFamily: "initial" }}>
             {selectedJob.title}
           </Typography>
-          <p style={{ fontFamily: "initial" }}>{selectedJob.description}</p><br></br>
-
+          <br />
+          <h5 style={{color:'green'}}>Description</h5>
+          
+          <p style={{ fontFamily: "initial" }}> {selectedJob.description}</p><br></br>
+          <h5 style={{color:'green'}}>Company Name:<span>{selectedJob.company}</span></h5> 
+          <br />
+          <h5 style={{color:'green'}}>Pay:${selectedJob.salary}</h5>
+          <br /><br />
           <Button variant="contained" onClick={()=>{
             navigate('/apply/' + selectedJobId)
           }}>Apply</Button>

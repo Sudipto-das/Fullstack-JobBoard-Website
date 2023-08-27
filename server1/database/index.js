@@ -18,7 +18,7 @@ const jobSchema = new mongoose.Schema({
   description: String,
   catagory: String,
   company: String,
-  salary: String,
+  salary: Number,
   lastdate: String,
   admin: {
     type: mongoose.Schema.Types.ObjectId,

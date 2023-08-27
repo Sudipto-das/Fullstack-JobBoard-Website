@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Typography, Grid } from "@mui/material";
 import { roleState } from "../store/atom/role";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
+import { userState } from "../store/atom/user";
 
 const LandingPage = () => {
   const navigate = useNavigate();
   const setRole = useSetRecoilState(roleState);
+  
+  
 
   return (
     <>

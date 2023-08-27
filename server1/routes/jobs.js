@@ -91,7 +91,7 @@ router.get("/applied", authenticatejwt, async (req, res) => {
   const appliedJob = await Application.findOne({ user: userId }).populate(
     "job"
   );
-  console.log(appliedJob.job);
+ 
   if (appliedJob) {
     res.json({ appliedJob: appliedJob.job });
   } else {

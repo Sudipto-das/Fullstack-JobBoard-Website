@@ -1,12 +1,15 @@
 import { Button, Card, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { Link, useNavigate } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { roleState } from "../store/atom/role";
+import { userState } from "../store/atom/user";
 const Signin = () => {
   const [username,setUsername] = useState('')
   const [password,setPassword] = useState('')
   const role = useRecoilValue(roleState)
+  const setUser:any = useSetRecoilState(userState)
+  const navigate = useNavigate()
   const handleSignin = async ()=>{
     if(role==='Recruter'){
     await fetch('http://localhost:3001/auth/admin/login',{
@@ -20,6 +23,8 @@ const Signin = () => {
       response.json().then((data)=>{
         if (data.token){
           localStorage.setItem('token',data.token)
+          setUser(username)
+          navigate('/postjob')
         }
         else{
           alert(data.message)
@@ -40,6 +45,9 @@ if(role === "Candidate"){
     response.json().then((data)=>{
       if (data.token){
         localStorage.setItem('token',data.token)
+        setUser(username)
+        navigate('/joblist')
+        
       }
       else{
         alert(data.message)

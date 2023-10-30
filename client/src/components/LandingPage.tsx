@@ -13,9 +13,12 @@ const LandingPage = () => {
 
   return (
     <>
+    <div style={{width:'80%',margin:'0 auto',marginTop:'5em',borderRadius:'2em',background:' #ceeec9 ',boxShadow:' 12px 12px 10px 1px  #d0d6cf '}}>
+
+    
       <Grid
         container
-        style={{ maxWidth: "1350px", margin: "0 auto", minHeight: "75vh" }}
+        style={{ maxWidth: "1350px", margin: "0 auto", minHeight: "75vh", }}
       >
         <Grid item xs={12} sm={5}>
           <div style={{ padding: "2em" }}>
@@ -96,6 +99,7 @@ const LandingPage = () => {
           </div>
         </Grid>
       </Grid>
+      </div>
       <div
         style={{
           position: "fixed",
@@ -112,6 +116,7 @@ const LandingPage = () => {
         <Typography style={{fontFamily: "initial",}}>
           &copy; {new Date().getFullYear()} CareerConnect. All rights reserved.
         </Typography>
+      
       </div>
     </>
   );

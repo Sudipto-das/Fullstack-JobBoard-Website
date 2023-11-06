@@ -87,17 +87,23 @@ router.post("/apply/:jobId", authenticatejwt, async (req, res) => {
 
 router.get("/applied", authenticatejwt, async (req, res) => {
   const userId = req.user.id;
-  console.log(userId);
-  const appliedJob = await Application.findOne({ user: userId }).populate(
-    "job"
-  );
- 
-  if (appliedJob) {
-    res.json({ appliedJob: appliedJob.job });
+  
+  // Find all applications for the user
+  const applications = await Application.find({ user: userId }).populate("job");
+
+  if (applications.length > 0) {
+    // Extract job details from each application
+    const appliedJobs = applications.map(application => ({
+      job: application.job,
+      status: application.status
+    }));
+
+    res.json({ appliedJobs });
   } else {
-    res.json({ message: "No applied job found for the user" });
+    res.json({ message: "No applied jobs found for the user" });
   }
 });
+
 router.get("/applications", authenticatejwt, async (req, res) => {
   const userId = req.user.id;
   const appliedJob = await Application.findOne({ admin: userId });

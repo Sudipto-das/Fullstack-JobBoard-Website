@@ -1,26 +1,26 @@
-import { Button, TextField } from "@mui/material";
+import { Button, Card, TextField, TextareaAutosize } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-
+import { MuiFileInput } from 'mui-file-input'
 const Apply = () => {
- 
-  let {jobId} = useParams()
- 
+
+  let { jobId } = useParams()
+
   const [resume, setResume] = useState(null);
   const [coverLetter, setCoverLetter] = useState("");
- console.log(coverLetter)
-  const handleFile = (e)=>{
-     setResume(e.target.files[0])
+
+  const handleFile = (value) => {
+    setResume(value)
   }
-  const handleSubmit = async ()=>{
+  const handleSubmit = async () => {
     const fromData = new FormData()
-    if(resume){
-      fromData.append('resume',resume)
-      
+    if (resume) {
+      fromData.append('resume', resume)
+
     }
-    fromData.append('coverLetter',coverLetter)
-    
-    
+    fromData.append('coverLetter', coverLetter)
+
+
     try {
       const response = await fetch(`http://localhost:3001/jobs/apply/${jobId}`, {
         method: "POST",
@@ -35,7 +35,8 @@ const Apply = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        
+        alert(data.message)
       } else {
         console.error("Error uploading file.");
       }
@@ -44,25 +45,50 @@ const Apply = () => {
     }
   }
   return (
-    <div style={{ marginTop: "5em" }}>
-      <TextField
-        placeholder="Cover Letter"
-        onChange={(e) => {
-          setCoverLetter(e.target.value);
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        marginTop: "5em",
+        color: "white",
+      }}
+    >
+      <Card
+        variant={"outlined"}
+        style={{
+          width: 500,
+          height: 500,
+          padding: "1em",
+          color: "whitesmoke",
+          fontFamily: "Courier New",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between", // Center the items vertically
         }}
-      />
-      <input
-        type="file"
-        id="cvFileInput"
-        accept=".pdf, .doc, .docx"
-        onChange={handleFile}
-      ></input>
-      <Button
-        variant="outlined"
-        onClick= {handleSubmit}
       >
-        Apply Now
-      </Button>
+        <TextareaAutosize
+          style={{ width: "100%" ,color:'black'}} // Make the textarea full width
+          minRows={10}
+          placeholder="Cover Letter"
+          onChange={(e) => {
+            setCoverLetter(e.target.value);
+          }}
+        />
+        <MuiFileInput
+          name="resume"
+          placeholder="insert a file"
+          id="cvFileInput"
+          value={resume}
+          onChange={handleFile}
+        />
+        <Button
+          variant="outlined"
+          onClick={handleSubmit}
+          style={{ alignSelf: "center" }} // Center the button horizontally
+        >
+          Apply Now
+        </Button>
+      </Card>
     </div>
   );
 };

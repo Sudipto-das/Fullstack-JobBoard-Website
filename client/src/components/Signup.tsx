@@ -1,4 +1,4 @@
-import { Button, Card, TextField, Typography } from "@mui/material";
+import { Button, Card, Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { roleState } from "../store/atom/role";
@@ -60,7 +60,14 @@ const Signin = () => {
 }
   return (
     <>
-      <div
+    <div style={{width:'80%',margin:'0 auto',marginTop:'10em'}}>
+
+    
+    <Grid
+        container
+      >
+        <Grid item xs={12} sm={5}>
+        <div
         style={{
           display: "flex",
           justifyContent: "center",
@@ -142,6 +149,19 @@ const Signin = () => {
           </Link>
         </Card>
       </div>
+        </Grid>
+        <Grid item xs={12} sm={5}>
+        <div style={{ padding: "1em" ,background:'#ceeec9',borderRadius:'2em',boxShadow:' 12px 12px 10px 1px  #d0d6cf '}}>
+            <img
+              style={{}}
+              src="https://cdni.iconscout.com/illustration/premium/thumb/searching-for-job-online-4487043-3738450.png"
+              alt="https://cdni.iconscout.com/illustration/premium/thumb/searching-for-job-online-4487043-3738450.png"
+            />
+          </div>
+        </Grid>
+        </Grid>
+  
+        </div>
     </>
   );
 };

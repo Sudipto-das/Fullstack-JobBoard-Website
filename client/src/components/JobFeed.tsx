@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Button,
+  CircularProgress,
   Container,
   Divider,
   Grid,
@@ -41,7 +42,9 @@ const JobFeed = () => {
   return (
     <div>
       {loading ? (
-        <p> Loading....</p>
+         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+         <CircularProgress />
+       </div>
       ) : (
         <Grid container style={{marginTop:'3em'}}>
           <Grid

@@ -33,7 +33,7 @@ const Applied = () => {
   return (
     
       <div style={{width:'80%',margin:'6em auto', }}>
-        <Typography variant="h4"> My Applications</Typography>
+        <Typography variant="h4" style={{fontFamily:'initial',color:' #abe8a0 '}}> My Applications</Typography>
         {loading? (
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <CircularProgress />

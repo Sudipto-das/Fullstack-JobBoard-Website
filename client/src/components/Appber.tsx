@@ -39,12 +39,10 @@ const Appber = () => {
         </div>
   
         <div style={{ display: "flex" }}>
-          <div style={{ marginRight: 10 }}>
-            <Button style={{color:'#58D68D',fontFamily: "initial"}} >Applications</Button>
-          </div>
+       
   
           <div style={{ marginRight: 10 }}>
-            <Button style={{color:'#58D68D',fontFamily: "initial"}} onClick={()=>{navigate('/joblist')}}>Jobs</Button>
+            <Button style={{color:'#58D68D',fontFamily: "initial"}} onClick={()=>{navigate('/dashboard')}}>Dashboard</Button>
           </div>
           <div style={{ marginRight: 10 }}>
             <Button style={{color:'#58D68D',fontFamily: "initial"}} onClick={()=>{navigate('/postjob')}}>Create</Button>

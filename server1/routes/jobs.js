@@ -25,6 +25,8 @@ router.get("/alljobs", authenticatejwt, async (req, res) => {
   res.json({ jobs });
 });
 
+
+
 router.put("/update/:jobId", authenticatejwt, async (req, res) => {
   const isAdmin = req.user.isAdmin;
   const { jobId } = req.params;
@@ -106,10 +108,37 @@ router.get("/applied", authenticatejwt, async (req, res) => {
 
 router.get("/applications", authenticatejwt, async (req, res) => {
   const userId = req.user.id;
-  const appliedJob = await Application.findOne({ admin: userId });
-  if (appliedJob) {
-    res.json({ appliedJob });
+  const appliedJob = await Application.find({ admin: userId });
+  if (appliedJob.length >0) {
+    const applications = appliedJob.map(application=>({
+      id:application._id,
+      coverLetter:application.coverLetter,
+      resume:application.resume
+    }))
+    res.json({ applications });
+  }  
+  else{
+    res.json({ message: "No application found " });
   }
 });
+router.get('/download/resume/:applicationId',async (req,res)=>{
+  const applicationId = req.params.applicationId
+  try{
+    const application = await Application.findById(applicationId)
+
+    if (!application) {
+      return res.status(404).json({ message: 'Application not found' });
+    }
+
+    res.setHeader('Content-Type', application.resume.contentType);
+    res.setHeader('Content-Disposition', `attachment; filename="resume.pdf"`);
+
+    res.send(application.resume.data);
+
+  }
+  catch(error){
+    res.status(500).json({ message: 'Error downloading resume' });
+  }
+})
 
 module.exports = router;

@@ -12,6 +12,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { roleState } from "./store/atom/role";
 import { userState } from "./store/atom/user";
 import Applied from "./components/Applied";
+import Dashboard from "./components/Dashboar";
 function App() {
   return (
     <Router>
@@ -25,6 +26,7 @@ function App() {
       <Route path="/postjob" element={<PostJob/>}></Route>
       <Route path="/apply/:jobId" element={<Apply/>}></Route>
       <Route path="/applied" element={<Applied/>}></Route>
+      <Route path="/dashboard" element={<Dashboard/>}></Route>
       </Routes>
     </Router>
   )

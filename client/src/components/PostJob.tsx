@@ -73,7 +73,7 @@ const PostJob = ()=>{
             <br/>
             <br />
             <TextareaAutosize
-            rowsMin={3}
+            minRows={3}
             maxRows={7}
             placeholder="Description"
             

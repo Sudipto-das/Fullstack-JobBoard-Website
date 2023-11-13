@@ -6,101 +6,109 @@ import {
   Divider,
   Grid,
   List,
+  ListItem,
   ListItemText,
   Typography,
 } from "@mui/material";
-import ListItem from "@mui/material/ListItem";
 import { jobState } from "../store/atom/job";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 
-
 const JobFeed = () => {
-  
   const setJobs = useSetRecoilState(jobState);
-  const [selectedJobId, setSelectedJobId] = useState();
-  const [loading, setLoding] = useState(true);
+  const jobs = useRecoilValue(jobState);
+  const [selectedJobId, setSelectedJobId] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const jobsPerPage = 5;
+
   const fetchJob = async () => {
-    await fetch("http://localhost:3001/jobs/alljobs", {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    }).then((response) => {
-      response.json().then((data) => {
-        setLoding(false);
-        setJobs(data.jobs);
+    try {
+      const response = await fetch("http://localhost:3001/jobs/alljobs", {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
       });
-    });
+      const data = await response.json();
+      setJobs(data.jobs);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     fetchJob();
-  }, []);
+  }, [currentPage]);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
 
   return (
-    <div>
+    <Container>
       {loading ? (
-         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-         <CircularProgress />
-       </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "80vh",
+          }}
+        >
+          <CircularProgress />
+        </div>
       ) : (
-        <Grid container style={{marginTop:'3em'}}>
-          <Grid
-            item
-            lg={4}
-            md={12}
-            sm={12}
-            style={{background:"#D5F5E3"}}
-          >
-            <JobsList onSelectJob={(jobId: any) => setSelectedJobId(jobId)} />
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={4} style={{ background: "#D5F5E3", padding: "1em" }}>
+            <JobsList
+              onSelectJob={(jobId) => setSelectedJobId(jobId)}
+              currentPage={currentPage}
+              jobsPerPage={jobsPerPage}
+            />
+            <Pagination
+              currentPage={currentPage}
+              totalPages={Math.ceil(jobs.length / jobsPerPage)}
+              onPageChange={handlePageChange}
+            />
           </Grid>
-          <Grid item lg={8} md={12} sm={12} >
+          <Grid item xs={12} md={8}>
             <JobDetails selectedJobId={selectedJobId} />
           </Grid>
         </Grid>
       )}
-    </div>
+    </Container>
   );
 };
 
-export const JobsList = ({ onSelectJob }) => {
+const JobsList = ({ onSelectJob, currentPage, jobsPerPage }) => {
   const jobs = useRecoilValue(jobState);
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
 
   return (
     <div>
-      {jobs.map((job: any) => (
-        <div key={job.id} style={{ padding: "1em" }}>
+      {currentJobs.map((job) => (
+        <div key={job.id} style={{ marginBottom: "1em" }}>
           <List
             style={{ cursor: "pointer" }}
             onClick={() => onSelectJob(job._id)}
-            sx={{ width: "100%", maxWidth: 360 }}
           >
             <ListItem alignItems="flex-start">
               <ListItemText
                 primary={
-                  <Typography
-                    style={{
-                      fontFamily: "initial",
-                      fontWeight: "bolder",
-                      fontSize: "1.2em",
-                    }}
-                  >
+                  <Typography variant="h6" style={{ fontWeight: "bold" }}>
                     {job.title}
                   </Typography>
                 }
                 secondary={
-                  <Typography
-                    sx={{ display: "inline" }}
-                    component="span"
-                    variant="body2"
-                    color="text.primary"
-                    style={{ fontFamily: "initial" }}
-                  >
+                  <Typography variant="body2" color="textSecondary">
                     {job.company}
                   </Typography>
-                 
                 }
               />
             </ListItem>
@@ -112,42 +120,64 @@ export const JobsList = ({ onSelectJob }) => {
   );
 };
 
-export const JobDetails = ({ selectedJobId }) => {
-  const navigate = useNavigate()
+const JobDetails = ({ selectedJobId }) => {
+  const navigate = useNavigate();
   const jobs = useRecoilValue(jobState);
-  if(!selectedJobId && jobs.length>0){
-    selectedJobId = jobs[0]._id;
+  
+
+  if (!selectedJobId && jobs.length>0){
+    selectedJobId = jobs[0]._id
   }
-  const selectedJob: any = jobs.find((job: any) => job._id === selectedJobId);
+  const selectedJob = jobs.find((job) => job._id === selectedJobId);
   return (
-    <div
-      style={{
-        position: "fixed",
-        padding: "1em",
-       
-        
-        
-      }}
-    >
+    <div style={{ padding: "1em" }}>
       {selectedJob && (
         <>
-          <Typography variant="h3" style={{ fontFamily: "initial" }}>
+          <Typography variant="h4" style={{ fontWeight: "bold", marginBottom: "0.5em" }}>
             {selectedJob.title}
           </Typography>
-          <br />
-          <h5 style={{color:'green'}}>Description</h5>
+          <Typography variant="subtitle1" style={{ color: "green", marginBottom: "1em" }}>
+            Company: {selectedJob.company}
+          </Typography>
+          <Typography variant="body1" paragraph>
+            {selectedJob.description}
+          </Typography>
           
-          <p style={{ fontFamily: "initial" }}> {selectedJob.description}</p><br></br>
-          <h5 style={{color:'green'}}>Company Name:<span>{selectedJob.company}</span></h5> 
-          <br />
-          <h5 style={{color:'green'}}>Pay:${selectedJob.salary}</h5>
-          <br /><br />
-          <Button variant="contained" onClick={()=>{
-            navigate('/apply/' + selectedJobId)
-          }}>Apply</Button>
+          <Typography variant="subtitle1" style={{ color: "green" }}>
+            Pay: ${selectedJob.salary}
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ marginTop: "1em" }}
+            onClick={() => {
+              navigate('/apply/' + selectedJobId);
+            }}
+          >
+            Apply
+          </Button>
         </>
       )}
     </div>
   );
 };
+
+const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+  const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
+
+  return (
+    <div style={{ marginTop: "1em" }}>
+      {pages.map((page) => (
+        <Button
+          key={page}
+          variant={currentPage === page ? "contained" : "outlined"}
+          onClick={() => onPageChange(page)}
+        >
+          {page}
+        </Button>
+      ))}
+    </div>
+  );
+};
+
 export default JobFeed;

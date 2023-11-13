@@ -24,7 +24,7 @@ const Signin = () => {
         if (data.token){
           localStorage.setItem('token',data.token)
           setUser(username)
-          navigate('/postjob')
+          navigate('/dashboard')
         }
         else{
           alert(data.message)

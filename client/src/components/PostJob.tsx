@@ -1,4 +1,4 @@
-import { Button, Card, TextField, TextareaAutosize, Typography } from "@mui/material";
+import { Button, Card, MenuItem, Select, TextField, TextareaAutosize, Typography } from "@mui/material";
 import { useState } from "react";
 
 const PostJob = ()=>{
@@ -25,104 +25,86 @@ const PostJob = ()=>{
 
         })
     }
-    return <>
-    <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "5em ",
-        }}
-      >
-        <Typography
-          variant="h3"
-          style={{
-            fontFamily: "Courier New",
-            fontSize: "1.2em",
-            color: "#43BD78",
-            fontWeight: "bold",
-          }}
-        >
-          Post New Job
-        </Typography>
-      </div>
-    
-    <div style={{
-        display: "flex",
-        
-        justifyContent: "center",
-        marginTop: "2em",
-        color: "white",
-      }}>
-        <Typography>Post your Job</Typography>
-        <Card variant={"outlined"}
-          style={{
+    return (
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "5em" }}>
+        <Card
+          variant="outlined"
+          sx={{
             width: 500,
             height: 600,
             padding: "1em",
-            
             color: "whitesmoke",
             fontFamily: "Courier New",
-          }}>
-            <TextField fullWidth={true}
-            id="outlined-basic"
-            placeholder="Title"
+          }}
+        >
+          <Typography variant="h5" sx={{ marginBottom: 2, }} style={{color:'GrayText',fontFamily:'initial'}}>
+            Post A New Job
+          </Typography>
+          <TextField
+            fullWidth
             variant="outlined"
-            onChange={(e)=>{
-                setTitle(e.target.value)
-            }}/>
-            <br/>
-            <br />
-            <TextareaAutosize
-            minRows={3}
+            label="Title"
+            sx={{ marginBottom: 2 }}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+          />
+          <TextareaAutosize
+            minRows={6}
             maxRows={7}
             placeholder="Description"
-            
-            style={{ width: "100%" ,border:'1px solid black',borderRadius:'0.2em',color:'black'}}
+            style={{ width: "100%", border: "1px solid black", borderRadius: '0.2em', color: 'black' }}
+            sx={{ marginBottom: 2 }}
             onChange={(e) => {
               setDescription(e.target.value);
             }}
           />
-             <br/>
-             <br />
-            <TextField fullWidth={true}
-            id="outlined-basic"
+          <br /><br />
+          <TextField
+            fullWidth
+            variant="outlined"
             label="Salary"
-            onChange={(e)=>{
-                setSalary(e.target.value)
+            sx={{ marginBottom: 2 }}
+            onChange={(e) => {
+              setSalary(e.target.value);
             }}
-            variant="outlined"/>
-             <br/>
-            <br />
-             
-            <TextField fullWidth={true}
-            id="outlined-basic"
+          />
+          <TextField
+            fullWidth
+            variant="outlined"
             label="Company"
-            onChange={(e)=>{
-                setCompany(e.target.value)
+            sx={{ marginBottom: 2 }}
+            onChange={(e) => {
+              setCompany(e.target.value);
             }}
-            variant="outlined"/>
-            <br /><br />
-            <select style={{color:'black'}} value={catagory} onChange={(e)=>setCatagory(e.target.value)}>
-                <option >Select Catagory</option>
-                <option >FullStack</option>
-                <option >BackEnd</option>
-                <option >FrontEnd</option>
-            </select>
-            <br />
-            <br />
-              <Button variant="outlined"
-            style={{
-                width:'100%',
+          />
+          <Select
+            value={catagory}
+            onChange={(e) => setCatagory(e.target.value)}
+            sx={{ marginBottom: 2, width: "100%" }}
+          >
+            <MenuItem value="" disabled>
+              Select Category
+            </MenuItem>
+            <MenuItem value="FullStack">FullStack</MenuItem>
+            <MenuItem value="BackEnd">BackEnd</MenuItem>
+            <MenuItem value="FrontEnd">FrontEnd</MenuItem>
+          </Select>
+          <Button
+            variant="outlined"
+            onClick={handlePostJob}
+            sx={{
+              width: '100%',
               fontFamily: "Courier New",
               fontSize: "1em",
               fontWeight: "bold",
-              color:'#43BD78'
-            }} onClick={handlePostJob}> Post</Button>
-           
+              color: '#43BD78',
+            }}
+          >
+            Post
+          </Button>
         </Card>
-        
-      
-    </div>
-    </>
+      </div>
+    );
 }
 export default PostJob;

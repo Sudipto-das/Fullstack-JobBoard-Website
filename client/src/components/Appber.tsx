@@ -18,21 +18,25 @@ const Appber = () => {
       
         style={{
           display: "flex",
-          justifyContent: "space-between",
-          padding: 5,
-          marginBottom: "1em",
-          zIndex: 1,
-          background:'white',
-          position: "fixed",
-          top: 0,
-          width: "100%",
-          borderBlockEnd:'0.3px solid black'
+            justifyContent: "space-between",
+            padding: '1em',
+            marginBottom: "1em",
+            zIndex: 1,
+            background:'white',
+            boxShadow:'10px 5px 5px gray',
+            top: 0,
+            width: "80%",
+            margin:'0.5em auto',
+            borderBlockEnd:'0.3px solid black',
+           borderRadius:'.5em',
+           backgroundColor:' #def0db '
+         
         }}
       >
         <div style={{ marginLeft: 10 }}>
           <Typography
             variant={"h6"}
-            style={{ fontWeight: "bolder", fontFamily: "initial",color:'#27AE60 ' }}
+            style={{ fontWeight: "bolder", fontFamily: "monospace",color:'#27AE60 ' }}
           >
             CareearConnect
           </Typography>
@@ -42,10 +46,10 @@ const Appber = () => {
        
   
           <div style={{ marginRight: 10 }}>
-            <Button style={{color:'#58D68D',fontFamily: "initial"}} onClick={()=>{navigate('/dashboard')}}>Dashboard</Button>
+            <Button style={{color:'#58D68D',fontFamily: "monospace",fontWeight:'bold'}} onClick={()=>{navigate('/dashboard')}}>Dashboard</Button>
           </div>
           <div style={{ marginRight: 10 }}>
-            <Button style={{color:'#58D68D',fontFamily: "initial"}} onClick={()=>{navigate('/postjob')}}>Create</Button>
+            <Button style={{color:'#58D68D',fontFamily: "monospace",fontWeight:'bold'}} onClick={()=>{navigate('/postjob')}}>Create</Button>
           </div>
   
         </div>
@@ -70,20 +74,23 @@ const Appber = () => {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          padding: 5,
+          padding: '1em',
           marginBottom: "1em",
           zIndex: 1,
           background:'white',
-          position: "fixed",
+          boxShadow:'10px 5px 5px gray',
           top: 0,
-          width: "100%",
-          borderBlockEnd:'0.3px solid black'
+          width: "80%",
+          margin:'0.5em auto',
+          borderBlockEnd:'0.3px solid black',
+         borderRadius:'.5em',
+         backgroundColor:' #def0db '
         }}
       >
         <div style={{ marginLeft: 10 }}>
           <Typography
             variant={"h6"}
-            style={{ fontWeight: "bolder", fontFamily: "initial",color:'#27AE60 ' }}
+            style={{ fontWeight: "bolder", fontFamily: "monospace",color:'#27AE60 ' }}
           >
             CareearConnect
           </Typography>
@@ -91,11 +98,11 @@ const Appber = () => {
   
         <div style={{ display: "flex" }}>
           <div style={{ marginRight: 10 }}>
-            <Button style={{color:'#58D68D',fontFamily: "initial" }} onClick={()=>{navigate('/applied')}}>Applications</Button>
+            <Button style={{color:'#58D68D',fontFamily: "monospace" ,fontWeight:'bold'}} onClick={()=>{navigate('/applied')}}>Applications</Button>
           </div>
   
           <div style={{ marginRight: 10 }}>
-            <Button style={{color:'#58D68D',fontFamily: "initial" }} onClick={()=>{navigate('/joblist')}}>Jobs</Button>
+            <Button style={{color:'#58D68D',fontFamily: "monospace" ,fontWeight:'bold'}} onClick={()=>{navigate('/joblist')}}>Jobs</Button>
           </div>
   
         </div>
@@ -121,30 +128,33 @@ const Appber = () => {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            padding: 5,
+            padding: '1em',
             marginBottom: "1em",
             zIndex: 1,
             background:'white',
-            position: "fixed",
+            boxShadow:'10px 5px 5px gray',
             top: 0,
-            width: "100%",
-            borderBlockEnd:'0.3px solid black'
+            width: "80%",
+            margin:'0.5em auto',
+            borderBlockEnd:'0.3px solid black',
+           borderRadius:'.5em',
+           backgroundColor:' #def0db '
           }}
         >
           <div style={{ marginLeft: 10 }}>
             <Typography
               variant={"h6"}
-              style={{ fontWeight: "bolder", fontFamily: "initial",color:'#27AE60 ' }}
+              style={{ fontWeight: "bolder", fontFamily: 'monospace',color:'#27AE60 ' }}
             >
               CareearConnect
             </Typography>
           </div>
-    
+          
    
-          {/* <div style={{display:'flex' ,marginRight:10,}}>
+          <div style={{display:'flex' ,marginRight:10,}}>
           
             <Avatar>{user}</Avatar>
-          </div> */}
+          </div>
         </div>
       );
     

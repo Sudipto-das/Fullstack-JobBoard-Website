@@ -73,7 +73,7 @@ const LandingPage = () => {
               style={{
                 border: "0.2px solid green",
                 color: "black",
-                fontFamily: "initial",
+                fontWeight:'bold',
                 marginRight: "1em",
               }}
               onClick={() => {
@@ -87,7 +87,7 @@ const LandingPage = () => {
               style={{
                 border: "0.2px solid green",
                 color: "black",
-                fontFamily: "initial",
+                fontWeight:'bold'
               }}
               onClick={() => {
                 setRole("Candidate");
@@ -113,7 +113,7 @@ const LandingPage = () => {
           
         }}
       >
-        <Typography style={{fontFamily: "initial",}}>
+        <Typography style={{}}>
           &copy; {new Date().getFullYear()} CareerConnect. All rights reserved.
         </Typography>
       

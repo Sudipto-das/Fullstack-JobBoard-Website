@@ -1,10 +1,11 @@
 import { Box, List, ListItem, Button, Divider, Typography, Paper, Grid, CircularProgress } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import { applicationState } from "../store/atom/application";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 const Dashboard = () => {
-  const [applications, setApplications] = useState([]);
-  const [loading,setLoading] = useState(true)
+  const  setApplications= useSetRecoilState(applicationState)
+  
   const fetchApplications = async () => {
     try {
       const response = await axios.get("http://localhost:3001/jobs/applications", {
@@ -13,8 +14,12 @@ const Dashboard = () => {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
       });
-      setApplications(response.data.applications);
-      setLoading(false)
+      setApplications((prevApplications) => ({
+        ...prevApplications,
+        isLoading: false,
+        applications: response.data.applications,
+      }));
+      
     } catch (error) {
       console.error("Error fetching applied jobs:", error);
     }
@@ -24,6 +29,18 @@ const Dashboard = () => {
     fetchApplications();
   }, []);
 
+
+  return (
+    <div>
+      <ApplicationComponent/>
+    </div>
+  )
+
+};
+
+const ApplicationComponent = ()=>{
+  const {isLoading,applications} = useRecoilValue(applicationState)
+  
   const handleAccept = (applicationId) => {
     // Handle the "Accept" action for the application with the given ID
     // You can implement your logic here
@@ -51,17 +68,16 @@ const Dashboard = () => {
       window.URL.revokeObjectURL(url);
     })
   };
-
   return (
     <div style={{ marginTop: '5em' }}>
       <Grid container>
         <Grid item lg={6} md={12} sm={12}>
           <Box mt={4} mx="auto" maxWidth={800}>
-            <Typography variant="h4" gutterBottom style={{ fontFamily: 'monospace' ,fontWeight:'bold'}}>
+            <Typography variant="h4" gutterBottom style={{fontWeight:'bold',color:'#4CAF50'}}>
               Job Applications
             </Typography>
             <List>
-              {loading ? (
+              {isLoading ? (
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                   <CircularProgress />
                 </div>
@@ -78,11 +94,13 @@ const Dashboard = () => {
                           <Grid item xs={6}>
                             <Typography variant="h6">Application ID: {application.id}</Typography>
                           </Grid>
-                          <Grid item xs={6} container justifyContent="flex-end">
+                          <Grid item xs={6} container justifyContent="flex-end" gap={2}>
+                            
                             <Button
                               variant="contained"
                               color="success"
                               onClick={() => handleAccept(application.id)}
+                              style={{fontWeight:'bold'}}
                             >
                               Accept
                             </Button>
@@ -90,6 +108,7 @@ const Dashboard = () => {
                               variant="contained"
                               color="error"
                               onClick={() => handleReject(application.id)}
+                              style={{fontWeight:'bold'}}
                             >
                               Reject
                             </Button>
@@ -97,9 +116,11 @@ const Dashboard = () => {
                               variant="contained"
                               color="info"
                               onClick={() => handleDownloadCV(application.id)}
+                              style={{fontWeight:'bold'}}
                             >
                               Download CV
                             </Button>
+                            
                           </Grid>
                         </Grid>
                       </ListItem>
@@ -113,6 +134,6 @@ const Dashboard = () => {
       </Grid>
     </div>
   );
-};
+}
 
 export default Dashboard;

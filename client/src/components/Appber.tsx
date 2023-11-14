@@ -149,7 +149,9 @@ const Appber = () => {
               CareearConnect
             </Typography>
           </div>
-          
+          <div style={{ marginRight: 10 }}>
+            <Button style={{color:'#58D68D',fontFamily: "monospace",fontWeight:'bold'}} onClick={()=>{navigate('/')}}>HomePage</Button>
+          </div>
    
           <div style={{display:'flex' ,marginRight:10,}}>
           

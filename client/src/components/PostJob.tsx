@@ -34,10 +34,10 @@ const PostJob = ()=>{
             height: 600,
             padding: "1em",
             color: "whitesmoke",
-            fontFamily: "Courier New",
+            
           }}
         >
-          <Typography variant="h5" sx={{ marginBottom: 2, }} style={{color:'GrayText',fontFamily:'initial'}}>
+          <Typography variant="h5" sx={{ marginBottom: 2, color: '#4CAF50' ,fontWeight:'bold'}}>
             Post A New Job
           </Typography>
           <TextField
@@ -45,38 +45,34 @@ const PostJob = ()=>{
             variant="outlined"
             label="Title"
             sx={{ marginBottom: 2 }}
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <TextareaAutosize
             minRows={6}
             maxRows={7}
             placeholder="Description"
-            style={{ width: "100%", border: "1px solid black", borderRadius: '0.2em', color: 'black' }}
-            sx={{ marginBottom: 2 }}
-            onChange={(e) => {
-              setDescription(e.target.value);
+            style={{
+              width: "100%",
+              border: "1px solid black",
+              borderRadius: "0.2em",
+              color: "black",
+              marginBottom: "1em",
             }}
+            onChange={(e) => setDescription(e.target.value)}
           />
-          <br /><br />
           <TextField
             fullWidth
             variant="outlined"
             label="Salary"
             sx={{ marginBottom: 2 }}
-            onChange={(e) => {
-              setSalary(e.target.value);
-            }}
+            onChange={(e) => setSalary(e.target.value)}
           />
           <TextField
             fullWidth
             variant="outlined"
             label="Company"
             sx={{ marginBottom: 2 }}
-            onChange={(e) => {
-              setCompany(e.target.value);
-            }}
+            onChange={(e) => setCompany(e.target.value)}
           />
           <Select
             value={catagory}
@@ -94,11 +90,11 @@ const PostJob = ()=>{
             variant="outlined"
             onClick={handlePostJob}
             sx={{
-              width: '100%',
+              width: "100%",
               fontFamily: "Courier New",
               fontSize: "1em",
               fontWeight: "bold",
-              color: '#43BD78',
+              color: "#43BD78",
             }}
           >
             Post

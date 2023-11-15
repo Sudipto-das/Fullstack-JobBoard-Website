@@ -140,5 +140,20 @@ router.get('/download/resume/:applicationId',async (req,res)=>{
     res.status(500).json({ message: 'Error downloading resume' });
   }
 })
+router.get('/posted',authenticatejwt, async (req,res)=>{
+  const userId = req.user.id
+  
+  try{
+    const postedJobs = await Job.find({admin:userId})
+
+    if(!postedJobs){
+      res.status(404).json({message:'Not any Job Posted '})
+    }
+    res.json({postedJobs})
+  }
+  catch(error){
+
+  }
+})
 
 module.exports = router;

@@ -11,12 +11,12 @@ import {
   Typography,
 } from "@mui/material";
 import { jobState } from "../store/atom/job";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 
 const JobFeed = () => {
-  const setJobs = useSetRecoilState(jobState);
-  const jobs = useRecoilValue(jobState);
+  const [jobs,setJobs] = useRecoilState(jobState);
+  
   const [selectedJobId, setSelectedJobId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);

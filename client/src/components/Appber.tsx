@@ -55,8 +55,8 @@ const Appber = () => {
         </div>
         <div style={{display:'flex' ,marginRight:10,}}>
           <Button style={{marginRight:10,color:'#58D68D'}} variant={'outlined'} onClick={()=>{
-            localStorage.setItem("token",null)
-            window.location = "/";
+            localStorage.setItem("token",JSON.stringify(null))
+            window.location.href = "/";
           }}>
             Logout
           </Button>
@@ -108,8 +108,8 @@ const Appber = () => {
         </div>
         <div style={{display:'flex' ,marginRight:10,}}>
           <Button style={{marginRight:10,color:'#58D68D'}} variant={'outlined'} onClick={()=>{
-            localStorage.setItem("token",null)
-            window.location = "/";
+            localStorage.setItem("token",JSON.stringify(null))
+            window.location.href = "/";
           }}>
             Logout
           </Button>

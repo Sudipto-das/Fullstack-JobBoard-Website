@@ -8,8 +8,8 @@ import PostJob from "./components/PostJob";
 import Appber from "./components/Appber";
 import Apply from "./components/Apply";
 import { useEffect } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { roleState } from "./store/atom/role";
+import {  useSetRecoilState } from "recoil";
+
 import { userState } from "./store/atom/user";
 import Applied from "./components/Applied";
 import Dashboard from "./components/Dashboar";
@@ -37,7 +37,7 @@ const InitUser =()=>{
   const {backendUrl} = config
   console.log(backendUrl)
   const setUser = useSetRecoilState(userState)
-  const setRole = useSetRecoilState(roleState)
+  
   const Init = async ()=>{
     try{
       

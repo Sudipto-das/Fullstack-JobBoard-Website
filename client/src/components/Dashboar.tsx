@@ -1,16 +1,18 @@
-import { Box, List, ListItem, Button, Divider, Typography, Paper, Grid, CircularProgress } from "@mui/material";
+import { Box, List, ListItem, Button,  Typography, Paper, Grid, CircularProgress } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { applicationState } from "../store/atom/application";
 import {  useRecoilValue, useSetRecoilState } from "recoil";
 
 import { postedJobState } from "../store/atom/postedJob";
+
 const Dashboard = () => {
+  
   const  setApplications= useSetRecoilState(applicationState)
   const  setPostedJobs = useSetRecoilState(postedJobState)
   const fetchApplications = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/jobs/applications", {
+      const response = await axios.get("https://careerconnect-zs06.onrender.com/jobs/applications", {
         headers: {
           "Content-type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("token"),
@@ -28,7 +30,7 @@ const Dashboard = () => {
   };
   const fetchPostedJobs = async () =>{
     try{
-      const response = await axios.get('http://localhost:3001/jobs/posted',{
+      const response = await axios.get(`https://careerconnect-zs06.onrender.com/jobs/posted`,{
         headers:{
           "Content-type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("token"),
@@ -68,14 +70,16 @@ const Dashboard = () => {
 const ApplicationComponent = ()=>{
   const {isLoading,applications} = useRecoilValue(applicationState)
   
-  const handleAccept = (applicationId) => {
+  const handleAccept = (applicationId: any) => {
     // Handle the "Accept" action for the application with the given ID
     // You can implement your logic here
+    console.log(applicationId)
   };
 
-  const handleReject = (applicationId) => {
+  const handleReject = (applicationId: any) => {
     // Handle the "Reject" action for the application with the given ID
     // You can implement your logic here
+    console.log(applicationId)
   };
 
   const handleDownloadCV = (applicationId: any) => {
@@ -192,18 +196,16 @@ const PostedJobs = () =>{
                 No posted jobs found.
               </Typography>
             ) : (
-              currentApplications.map((job) => (
+              currentApplications.map((job:any) => (
                 <Paper key={job._id} elevation={3} style={{ marginBottom: "16px" }}>
                   <Box p={3}>
-                    <Typography variant="h6" gutterBottom>
+                    <Typography variant="h6" gutterBottom style={{fontWeight:'bold'}}>
                       Job Title: {job.title}
                     </Typography>
                     <Typography variant="body1" paragraph>
                       Description: {job.description}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      Location: {job.location}
-                    </Typography>
+                    
                     <Typography variant="body2" color="textSecondary">
                       Posted On: {new Date(job.postedAt).toLocaleDateString()}
                     </Typography>

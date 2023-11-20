@@ -1,9 +1,10 @@
-import { Button, Card, TextField, TextareaAutosize } from "@mui/material";
+import { Button, Card,  TextareaAutosize } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { MuiFileInput } from 'mui-file-input'
-const Apply = () => {
 
+const Apply = () => {
+  
   let { jobId } = useParams()
 
   const [resume, setResume] = useState(null);
@@ -22,7 +23,7 @@ const Apply = () => {
 
 
     try {
-      const response = await fetch(`http://localhost:3001/jobs/apply/${jobId}`, {
+      const response = await fetch(`https://careerconnect-zs06.onrender.com/jobs/apply/${jobId}`, {
         method: "POST",
         body: fromData,
 

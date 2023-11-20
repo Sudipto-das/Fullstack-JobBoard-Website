@@ -6,6 +6,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userState } from "../store/atom/user";
 
 const Signin = () => {
+  
   const [username,setUsername] = useState('')
   const [password,setPassword] = useState('')
   const navigate = useNavigate()
@@ -14,7 +15,7 @@ const Signin = () => {
   const handleSignup = async ()=>{
     console.log(role)
     if(role==='Recruter'){
-    await fetch('http://localhost:3001/auth/admin/signup',{
+    await fetch(`https://careerconnect-zs06.onrender.com/auth/admin/signup`,{
       method:'POST',
       body: JSON.stringify({
         username: username,
@@ -37,7 +38,7 @@ const Signin = () => {
   }
  
     if(role === "Candidate"){
-  await fetch('http://localhost:3001/auth/user/signup',{
+  await fetch(`https://careerconnect-zs06.onrender.com/auth/user/signup`,{
     method:'POST',
     body: JSON.stringify({
       username: username,

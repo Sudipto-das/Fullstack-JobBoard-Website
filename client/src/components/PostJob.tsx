@@ -2,6 +2,7 @@ import { Button, Card, MenuItem, Select, TextField, TextareaAutosize, Typography
 import { useState } from "react";
 
 const PostJob = ()=>{
+    
     const [title,setTitle] = useState('');
     const [description,setDescription] = useState('')
     const [catagory,setCatagory] = useState('')
@@ -9,7 +10,7 @@ const PostJob = ()=>{
     const [salary,setSalary] = useState('')
 
     const handlePostJob = async () =>{
-        await fetch( 'http://localhost:3001/jobs/create',{
+        await fetch( `https://careerconnect-zs06.onrender.com/jobs/create`,{
             method:'POST',
             body: JSON.stringify({
                     title:title,

@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { JobsList } from "./JobFeed";
-import { Button, CircularProgress, Divider, List, ListItem, ListItemText, Typography } from "@mui/material";
+import  { useEffect, useState } from "react";
+
+
+import { Button, CircularProgress,  List, ListItem, ListItemText, Typography } from "@mui/material";
+
 const Applied = () => {
+  
   const [applications, setApplications] = useState([]);
   const [loading,setLoading] = useState(true)
   const [currentPage,setCurrentPage] = useState(1)
   const [applicationsPerPage] = useState(3)
   const fetchAppliedJobs = async () => {
     try {
-      fetch("http://localhost:3001/jobs/applied", {
+      fetch(`https://careerconnect-zs06.onrender.com/jobs/applied`, {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -49,7 +51,7 @@ const Applied = () => {
         <CircularProgress />
       </div>
     ) : (
-      currentApplications.map((job) => (
+      currentApplications.map((job:any) => (
         <div key={job.job[0]._id} style={{ padding: "1em", marginBottom: "1em", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}>
           <List sx={{ width: "100%", maxWidth: 360, backgroundColor: "white", borderRadius: "8px" }}>
             <ListItem alignItems="flex-start">

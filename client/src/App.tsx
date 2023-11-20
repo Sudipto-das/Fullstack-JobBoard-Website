@@ -13,6 +13,7 @@ import { roleState } from "./store/atom/role";
 import { userState } from "./store/atom/user";
 import Applied from "./components/Applied";
 import Dashboard from "./components/Dashboar";
+import config from './config'
 function App() {
   return (
     <Router>
@@ -33,13 +34,15 @@ function App() {
 }
 
 const InitUser =()=>{
+  const {backendUrl} = config
+  console.log(backendUrl)
   const setUser = useSetRecoilState(userState)
   const setRole = useSetRecoilState(roleState)
   const Init = async ()=>{
     try{
       
         
-         fetch(`http://localhost:3001/auth/me`,{
+         fetch(`https://careerconnect-zs06.onrender.com/auth/me`,{
           method:'GET',
           headers:{
             "Content-type": "application/json",

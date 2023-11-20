@@ -4,7 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { roleState } from "../store/atom/role";
 import { userState } from "../store/atom/user";
+
 const Signin = () => {
+  
   const [username,setUsername] = useState('')
   const [password,setPassword] = useState('')
   const role = useRecoilValue(roleState)
@@ -12,7 +14,7 @@ const Signin = () => {
   const navigate = useNavigate()
   const handleSignin = async ()=>{
     if(role==='Recruter'){
-    await fetch('http://localhost:3001/auth/admin/login',{
+    await fetch(`https://careerconnect-zs06.onrender.com/auth/admin/login`,{
       method:'POST',
       body: JSON.stringify({
         username: username,
@@ -34,7 +36,7 @@ const Signin = () => {
   }
  
 if(role === "Candidate"){
-  await fetch('http://localhost:3001/auth/user/login',{
+  await fetch(`https://careerconnect-zs06.onrender.com/auth/user/login`,{
     method:'POST',
     body: JSON.stringify({
       username: username,

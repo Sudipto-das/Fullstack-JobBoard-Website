@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   CircularProgress,
@@ -11,10 +11,11 @@ import {
   Typography,
 } from "@mui/material";
 import { jobState } from "../store/atom/job";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue,  } from "recoil";
 import { useNavigate } from "react-router-dom";
 
 const JobFeed = () => {
+  
   const [jobs,setJobs] = useRecoilState(jobState);
   
   const [selectedJobId, setSelectedJobId] = useState(null);
@@ -24,7 +25,7 @@ const JobFeed = () => {
 
   const fetchJob = async () => {
     try {
-      const response = await fetch("http://localhost:3001/jobs/alljobs", {
+      const response = await fetch(`https://careerconnect-zs06.onrender.com/jobs/alljobs`, {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -92,7 +93,7 @@ const JobsList = ({ onSelectJob, currentPage, jobsPerPage }) => {
 
   return (
     <div>
-      {currentJobs.map((job) => (
+      {currentJobs.map((job:any) => (
         <div key={job.id} style={{ marginBottom: "1em" }}>
           <List
             style={{ cursor: "pointer" }}
@@ -122,13 +123,13 @@ const JobsList = ({ onSelectJob, currentPage, jobsPerPage }) => {
 
 const JobDetails = ({ selectedJobId }) => {
   const navigate = useNavigate();
-  const jobs = useRecoilValue(jobState);
+  const jobs:any = useRecoilValue(jobState);
   
 
   if (!selectedJobId && jobs.length>0){
     selectedJobId = jobs[0]._id
   }
-  const selectedJob = jobs.find((job) => job._id === selectedJobId);
+  const selectedJob = jobs.find((job:any) => job._id === selectedJobId);
   return (
     <div style={{ padding: "1em" }}>
       {selectedJob && (

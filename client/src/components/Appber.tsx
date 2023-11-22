@@ -162,7 +162,7 @@ const Appber = () => {
    
           <div style={{display:'flex' ,marginRight:10,}}>
           
-            <Avatar>{user}</Avatar>
+            <Avatar>{user?.username}</Avatar>
           </div>
         </div>
       );

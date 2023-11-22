@@ -1,8 +1,3 @@
-const backendUrl = import.meta.env.BACKEND_URL ;
+const API_URL: string = 'https://careerconnect-zs06.onrender.com';
 
-const config = {
-  backendUrl,
-};
-console.log(backendUrl)
-
-export default config;
+export default API_URL;

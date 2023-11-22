@@ -13,10 +13,19 @@ import {
 import { jobState } from "../store/atom/job";
 import { useRecoilState, useRecoilValue,  } from "recoil";
 import { useNavigate } from "react-router-dom";
+import API_URL from "../config";
+
+interface Job{
+  _id:string;
+  title:string;
+  description:string;
+  company:string;
+  salary:number;
+}
 
 const JobFeed = () => {
   
-  const [jobs,setJobs] = useRecoilState(jobState);
+  const [jobs,setJobs] = useRecoilState<Job[]>(jobState);
   
   const [selectedJobId, setSelectedJobId] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -25,7 +34,7 @@ const JobFeed = () => {
 
   const fetchJob = async () => {
     try {
-      const response = await fetch(`https://careerconnect-zs06.onrender.com/jobs/alljobs`, {
+      const response = await fetch(`${API_URL}/jobs/alljobs`, {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -93,8 +102,8 @@ const JobsList = ({ onSelectJob, currentPage, jobsPerPage }) => {
 
   return (
     <div>
-      {currentJobs.map((job:any) => (
-        <div key={job.id} style={{ marginBottom: "1em" }}>
+      {currentJobs.map((job:Job) => (
+        <div key={job._id} style={{ marginBottom: "1em" }}>
           <List
             style={{ cursor: "pointer" }}
             onClick={() => onSelectJob(job._id)}

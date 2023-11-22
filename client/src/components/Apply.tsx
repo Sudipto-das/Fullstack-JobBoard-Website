@@ -2,15 +2,16 @@ import { Button, Card,  TextareaAutosize } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { MuiFileInput } from 'mui-file-input'
+import API_URL from "../config";
 
 const Apply = () => {
   
-  let { jobId } = useParams()
+  const { jobId }= useParams();
 
-  const [resume, setResume] = useState(null);
-  const [coverLetter, setCoverLetter] = useState("");
+  const [resume, setResume] = useState<File|null>(null);
+  const [coverLetter, setCoverLetter] = useState<string>("");
 
-  const handleFile = (value) => {
+  const handleFile = (value:File|null) => {
     setResume(value)
   }
   const handleSubmit = async () => {
@@ -23,7 +24,7 @@ const Apply = () => {
 
 
     try {
-      const response = await fetch(`https://careerconnect-zs06.onrender.com/jobs/apply/${jobId}`, {
+      const response = await fetch(`${API_URL}/jobs/apply/${jobId}`, {
         method: "POST",
         body: fromData,
 

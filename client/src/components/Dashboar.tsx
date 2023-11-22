@@ -3,8 +3,19 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { applicationState } from "../store/atom/application";
 import {  useRecoilValue, useSetRecoilState } from "recoil";
-
+import API_URL from "../config";
 import { postedJobState } from "../store/atom/postedJob";
+
+interface Application {
+  id: string;
+}
+
+interface PostedJob {
+  _id: string;
+  title: string;
+  description: string;
+  postedAt: string;
+}
 
 const Dashboard = () => {
   
@@ -12,7 +23,7 @@ const Dashboard = () => {
   const  setPostedJobs = useSetRecoilState(postedJobState)
   const fetchApplications = async () => {
     try {
-      const response = await axios.get("https://careerconnect-zs06.onrender.com/jobs/applications", {
+      const response = await axios.get(`${API_URL}/jobs/applications`, {
         headers: {
           "Content-type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("token"),
@@ -30,7 +41,7 @@ const Dashboard = () => {
   };
   const fetchPostedJobs = async () =>{
     try{
-      const response = await axios.get(`https://careerconnect-zs06.onrender.com/jobs/posted`,{
+      const response = await axios.get(`${API_URL}/jobs/posted`,{
         headers:{
           "Content-type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("token"),
@@ -85,7 +96,7 @@ const ApplicationComponent = ()=>{
   const handleDownloadCV = (applicationId: any) => {
     // Handle the "Download CV" action for the application with the given CV URL
     // You can implement your logic here, e.g., open a new tab with the CV file
-    axios.get(`http://localhost:3001/jobs//download/resume/${applicationId}`, { responseType: 'blob' }).then((response) => {
+    axios.get(`${API_URL}/jobs//download/resume/${applicationId}`, { responseType: 'blob' }).then((response) => {
       // Create a URL object for the resume file
       const url = window.URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
 
@@ -118,7 +129,7 @@ const ApplicationComponent = ()=>{
                     No applications found.
                   </Typography>
                 ) : (
-                  applications.map((application: any) => (
+                  applications.map((application: Application) => (
                     <Paper key={application.id} elevation={3} style={{ marginBottom: "16px" }}>
                       <ListItem>
                         <Grid container alignItems="center">
@@ -196,7 +207,7 @@ const PostedJobs = () =>{
                 No posted jobs found.
               </Typography>
             ) : (
-              currentApplications.map((job:any) => (
+              currentApplications.map((job:PostedJob) => (
                 <Paper key={job._id} elevation={3} style={{ marginBottom: "16px" }}>
                   <Box p={3}>
                     <Typography variant="h6" gutterBottom style={{fontWeight:'bold'}}>

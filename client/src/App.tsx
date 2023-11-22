@@ -7,14 +7,21 @@ import JobFeed from './components/JobFeed';
 import PostJob from "./components/PostJob";
 import Appber from "./components/Appber";
 import Apply from "./components/Apply";
-import { useEffect } from "react";
-import {  useSetRecoilState } from "recoil";
-
+import React, {  useEffect } from "react";
+import {   useSetRecoilState } from "recoil";
+import API_URL from "./config";
 import { userState } from "./store/atom/user";
 import Applied from "./components/Applied";
 import Dashboard from "./components/Dashboar";
-import config from './config'
-function App() {
+
+interface UserData {
+  isAdmin: boolean;
+  charAt(arg0: number): import("react").ReactNode;
+  isUser: boolean;
+  username:string
+}
+
+const App:React.FC=()=> {
   return (
     <Router>
       <Appber/>
@@ -33,16 +40,17 @@ function App() {
   )
 }
 
-const InitUser =()=>{
-  const {backendUrl} = config
-  console.log(backendUrl)
-  const setUser = useSetRecoilState(userState)
+const InitUser : React.FC=()=>{
+ 
+  const setUser =  useSetRecoilState<UserData | null>(userState);
+
+
   
   const Init = async ()=>{
     try{
       
         
-         fetch(`https://careerconnect-zs06.onrender.com/auth/me`,{
+         fetch(`${API_URL}/auth/me`,{
           method:'GET',
           headers:{
             "Content-type": "application/json",

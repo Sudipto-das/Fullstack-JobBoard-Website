@@ -1,6 +1,6 @@
 import { Button, Card, MenuItem, Select, TextField, TextareaAutosize, Typography } from "@mui/material";
 import { useState } from "react";
-
+import API_URL from "../config";
 const PostJob = ()=>{
     
     const [title,setTitle] = useState('');
@@ -10,7 +10,7 @@ const PostJob = ()=>{
     const [salary,setSalary] = useState('')
 
     const handlePostJob = async () =>{
-        await fetch( `https://careerconnect-zs06.onrender.com/jobs/create`,{
+        await fetch( `${API_URL}/jobs/create`,{
             method:'POST',
             body: JSON.stringify({
                     title:title,

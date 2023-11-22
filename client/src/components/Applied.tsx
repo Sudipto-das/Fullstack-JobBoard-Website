@@ -2,16 +2,29 @@ import  { useEffect, useState } from "react";
 
 
 import { Button, CircularProgress,  List, ListItem, ListItemText, Typography } from "@mui/material";
+import API_URL from "../config";
+
+interface Job {
+  _id:string;
+  title:string;
+  company:string;
+  salary:number
+
+}
+interface Application{
+  job:Job[];
+  status:string
+}
 
 const Applied = () => {
   
-  const [applications, setApplications] = useState([]);
-  const [loading,setLoading] = useState(true)
-  const [currentPage,setCurrentPage] = useState(1)
-  const [applicationsPerPage] = useState(3)
+  const [applications, setApplications] = useState<Application[]>([]);
+  const [loading,setLoading] = useState<boolean>(true)
+  const [currentPage,setCurrentPage] = useState <number>(1)
+  const [applicationsPerPage] = useState<number>(3)
   const fetchAppliedJobs = async () => {
     try {
-      fetch(`https://careerconnect-zs06.onrender.com/jobs/applied`, {
+      fetch(`${API_URL}/jobs/applied`, {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -33,7 +46,7 @@ const Applied = () => {
     fetchAppliedJobs();
   }, [currentPage]);
 
-  const handlePageChange = (newPage)=>{
+  const handlePageChange = (newPage:number)=>{
     setCurrentPage(newPage)
   }
   const indexOfLastAppliction= currentPage * applicationsPerPage;
@@ -51,7 +64,7 @@ const Applied = () => {
         <CircularProgress />
       </div>
     ) : (
-      currentApplications.map((job:any) => (
+      currentApplications.map((job:Application) => (
         <div key={job.job[0]._id} style={{ padding: "1em", marginBottom: "1em", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}>
           <List sx={{ width: "100%", maxWidth: 360, backgroundColor: "white", borderRadius: "8px" }}>
             <ListItem alignItems="flex-start">
@@ -118,8 +131,13 @@ const Applied = () => {
     
   
 };
+interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (newPage: number) => void;
+}
 
-const Pagination = ({currentPage,totalPages,onPageChange}) =>{
+const Pagination : React.FC<PaginationProps> = ({currentPage,totalPages,onPageChange}) =>{
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
   return  (    <div style={{ marginTop: '1em' }}>
       {pages.map((page) => (

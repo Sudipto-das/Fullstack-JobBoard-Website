@@ -4,13 +4,20 @@ import { userState } from "../store/atom/user";
 import { roleState } from "../store/atom/role";
 import { useNavigate } from "react-router-dom";
 
+interface User {
+  isAdmin: boolean;
+  charAt(arg0: number): import("react").ReactNode;
+  isUser: boolean;
+  username:string
+}
+
 const Appber = () => {
-  const role = useRecoilValue(roleState)
-  const user:any = useRecoilValue(userState);
+  const role = useRecoilValue<string>(roleState)
+  const user= useRecoilValue<User | null>(userState);
   const username = user ? user.username : '';
   const navigate = useNavigate()
   console.log(user);
-  if(user && user.isAdmin || user && role =="Recruter"){
+  if(user && (user.isAdmin || (user && role === 'Recruter'))){
     return (
     
       
